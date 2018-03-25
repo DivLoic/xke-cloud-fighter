@@ -1,0 +1,6 @@
+---
+# tasks file for zookeeper
+- name: installing zookeeper
+  yum:
+    name: confluent-kafka-2.11.noarch
+    state: present
