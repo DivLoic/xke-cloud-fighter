@@ -1,4 +1,4 @@
-name := "xke-lightbend-kstream"
+name := "xke-cloud-fighter"
 
 maintainer := "Loïc DIVAD <ldivad@xebia.fr>"
 
@@ -11,7 +11,7 @@ organizationHomepage := Some(url("http://blog.xebia.fr"))
 
 coverageEnabled := true
 
-val kafkaVersion = "1.0.0"
+val kafkaVersion = "1.0.1"
 val cpVerison = "4.0.0"
 val lbVersion = "0.1.0"
 
@@ -35,26 +35,15 @@ lazy val common = Seq(
   logLevel in doc := Level.Error
 )
 
-lazy val `xke-lightbend-kstream` = (project in file("."))
-  .aggregate(`kstream-java`, `kstream-scala`, `kstream-scala-ligthbend`)
+lazy val `xke-cloud-fighter` = (project in file("."))
+  .aggregate(`kstream-events`, `kstream-processing`)
 
-lazy val `kstream-java` = project
+lazy val `kstream-events` = project
+  .settings(common: _*)
+
+lazy val `kstream-processing` = project
   .settings(common: _*)
   .settings(kafkaDependencies: _*)
-
-lazy val `kstream-scala` = project
-  .settings(common: _*)
-  .settings(kafkaDependencies: _*)
-
-lazy val `kstream-scala-ligthbend` = project
-  .settings(common: _*)
-  .settings(lightbendDependencies: _*)
-
-lazy val `lbs-business-api` = project
-  .settings(common: _*)
-
-lazy val `xke-bladibla-actors` = project
-  .settings(common: _*)
 
 lazy val kafkaDependencies = Seq(
   resolvers ++= Seq("confluent" at "http://packages.confluent.io/maven/"),
