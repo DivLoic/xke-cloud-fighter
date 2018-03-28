@@ -1,6 +1,42 @@
 ---
 # tasks file for zookeeper
-- name: installing zookeeper
+- name: Installing zookeeper
   yum:
     name: confluent-kafka-2.11.noarch
     state: present
+
+- name: ensure group "zookeeper" exists
+  group:
+    name: zookeeper
+    state: present
+
+- name: ensure user "zookeeper" exists
+  user:
+    name: zookeeper
+    group: zookeeper
+    shell: /bin/bash
+
+- name: ensure zookeeper directories exists
+  file:
+    path: "{{ item }}"
+    owner: zookeeper
+    group: zookeeper
+    state: directory
+    mode: 0755
+  with_items:
+    - [ "/var/log/zookeeper", "/var/lib/zookeeper", "/var/log/kafka" ]
+
+- name: install zookeeper service configuraiton
+  copy: src=files/zookeeper.conf dest=/etc/sysconfig/zookeeper.conf owner=root group=root mode=0640
+
+- name: install zookeeper service definition
+  copy: src=files/zookeeper.service dest=/etc/systemd/system/zookeeper.service owner=root group=root mode=0640
+
+- name: reloading systemd zookeeper.service
+  systemd: state=reloaded daemon_reload=yes name=zookeeper.service
+
+- name: enable zookeeper service
+  service: name=zookeeper.service enabled=yes
+
+- name: start zookeeper service
+  service: name=zookeeper.service state=started
