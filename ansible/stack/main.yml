@@ -1,0 +1,3 @@
+---
+- import_playbook: ../stack-common.yml
+- import_playbook: ../stack-zookeeper.yml
