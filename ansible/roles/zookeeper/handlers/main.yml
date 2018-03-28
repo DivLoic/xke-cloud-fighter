@@ -1,2 +1,10 @@
 ---
 # handlers file for zookeeper
+- name: zookeeper-reload
+  systemd: state=reloaded daemon_reload=yes name=zookeeper.service
+
+- name: zookeeper-restart
+  service: name=zookeeper.service state=restarted
+
+- name: zookeeper-stop
+  service: name=zookeeper.service state=stopped
