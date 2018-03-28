@@ -4,7 +4,6 @@ After=network.target network-online.target remote-fs.target
 
 [Service]
 Type=forking
-# TODO: generalise the user
 User=zookeeper
 Group=zookeeper
 EnvironmentFile=-/etc/sysconfig/zookeeper.conf

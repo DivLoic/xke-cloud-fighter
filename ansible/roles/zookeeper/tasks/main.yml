@@ -26,11 +26,14 @@
   with_items:
     - [ "/var/log/zookeeper", "/var/lib/zookeeper", "/var/log/kafka" ]
 
+- name: configure zookeeper cluster
+  template: src=zookeeper.properties.j2 dest=/etc/kafka/zookeeper.properties mode=0640
+
 - name: install zookeeper service configuraiton
-  copy: src=files/zookeeper.conf dest=/etc/sysconfig/zookeeper.conf owner=root group=root mode=0640
+  copy: src=zookeeper.conf dest=/etc/sysconfig/zookeeper.conf owner=root group=root mode=0640
 
 - name: install zookeeper service definition
-  copy: src=files/zookeeper.service dest=/etc/systemd/system/zookeeper.service owner=root group=root mode=0640
+  copy: src=zookeeper.service dest=/etc/systemd/system/zookeeper.service owner=root group=root mode=0640
 
 - name: reloading systemd zookeeper.service
   systemd: state=reloaded daemon_reload=yes name=zookeeper.service
