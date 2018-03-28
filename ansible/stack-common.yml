@@ -1,14 +1,8 @@
 ---
   - hosts: all
     become: true
-    roles:
-    - role: ansiblebit.oracle-java
-      oracle_java_version: 8
-      oracle_java_set_as_default: yes
-
     tasks:
 
-    # TODO: try a with_items -> [ "Confluent", "Confluent.dist" ]
     - name: add the Confluent Platform repos (Dist)
       yum_repository:
         name: Confluent.dist
@@ -28,3 +22,8 @@
         gpgcheck: 1
         gpgkey: https://packages.confluent.io/rpm/4.0/archive.key
         enabled: yes
+
+    - name: install OpenJDK
+      yum:
+        name: java-1.8.0-openjdk.x86_64
+        state: present
