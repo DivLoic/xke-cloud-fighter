@@ -1,0 +1,13 @@
+dataDir=/var/lib/zookeeper
+clientPort=2181
+maxClientCnxns=0
+initLimit=5
+syncLimit=2
+
+{% for server in groups.zookeeper %}
+# zookeeper server: {{ hostvars[server]['ansible_fqdn'] }}
+server.{{ hostvars[server]['ansible_hostname'][-3:] }}={{ hostvars[server]['ansible_all_ipv4_addresses'][0] }}:2888:3888
+{% endfor %}
+
+autopurge.snapRetainCount=3
+autopurge.purgeInterval=24

@@ -37,7 +37,6 @@ resource "google_compute_instance" "zookeeper101" {
     network = "default"
     access_config { }
   }
-  //metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }
 
 resource "google_compute_instance" "broker101" {
@@ -55,5 +54,4 @@ resource "google_compute_instance" "broker101" {
     network = "default"
     access_config { }
   }
-  //metadata_startup_script = "${file("./scripts/apt-get-ansible.sh")}"
 }

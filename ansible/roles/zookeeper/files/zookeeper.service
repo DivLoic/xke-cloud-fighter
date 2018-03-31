@@ -1,0 +1,16 @@
+[Unit]
+Description=Confluent ZooKeeper
+After=network.target network-online.target remote-fs.target
+
+[Service]
+Type=forking
+User=zookeeper
+Group=zookeeper
+EnvironmentFile=-/etc/sysconfig/zookeeper.conf
+ExecStart=/usr/bin/zookeeper-server-start -daemon /etc/kafka/zookeeper.properties
+ExecStop=/usr/bin/zookeeper-server-stop
+TimeoutSec=60
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
