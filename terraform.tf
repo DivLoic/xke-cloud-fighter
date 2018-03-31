@@ -22,36 +22,17 @@ resource "google_compute_instance" "edge101" {
   metadata_startup_script = "${file("./ansible/scripts/yum-install-ansible.sh")}"
 }
 
-resource "google_compute_instance" "zookeeper101" {
-
-  name = "zookeeper101"
-  tags = [ "zookeeper" ]
-  zone = "europe-west1-d"
-  machine_type = "n1-standard-2"
-  boot_disk {
-    initialize_params {
-      image = "centos-7"
-    }
-  }
-  network_interface {
-    network = "default"
-    access_config { }
-  }
+module "zookeeper101" {
+  source = "./terraform/zookeeper"
+  myid = "101"
 }
 
-resource "google_compute_instance" "broker101" {
+module "zookeeper102" {
+  source = "./terraform/zookeeper"
+  myid = "102"
+}
 
-  name = "broker101"
-  tags = [ "broker" ]
-  zone = "europe-west1-d"
-  machine_type = "n1-standard-2"
-  boot_disk {
-    initialize_params {
-      image = "centos-7"
-    }
-  }
-  network_interface {
-    network = "default"
-    access_config { }
-  }
+module "zookeeper103" {
+  source = "./terraform/zookeeper"
+  myid = "103"
 }

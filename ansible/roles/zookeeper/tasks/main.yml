@@ -26,6 +26,10 @@
   with_items:
     - [ "/var/log/zookeeper", "/var/lib/zookeeper", "/var/log/kafka" ]
 
+- name: ensure file exists
+  copy: content={{ ansible_hostname[-3:] }} dest=/var/lib/zookeeper/myid
+        force=yes group=zookeeper owner=zookeeper mode=0644
+
 - name: install zookeeper service definition
   copy: src=zookeeper.service dest=/etc/systemd/system/zookeeper.service owner=root group=root mode=0644
   notify:
