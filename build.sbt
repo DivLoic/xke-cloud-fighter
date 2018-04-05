@@ -28,7 +28,7 @@ lazy val common = Seq(
   libraryDependencies ++= Seq(
     "com.typesafe" % "config" % "1.3.1",
     "joda-time" % "joda-time" % "2.9.7",
-    "com.sksamuel.avro4s" % "avro4s-core_2.12" % "1.8.0",
+    "org.scalatest" %% "scalatest" % "3.0.5" % "test",
     "ch.qos.logback" % "logback-classic" % "1.2.0" force()
   ),
 
@@ -36,14 +36,17 @@ lazy val common = Seq(
 )
 
 lazy val `xke-cloud-fighter` = (project in file("."))
-  .aggregate(`kstream-events`, `kstream-processing`)
+  .aggregate(`xcf-event-generator`, `xcf-stream-processing`, `xcf-batch-analytics`)
 
-lazy val `kstream-events` = project
+lazy val `xcf-event-generator` = project
   .settings(common: _*)
 
-lazy val `kstream-processing` = project
+lazy val `xcf-stream-processing` = project
   .settings(common: _*)
   .settings(kafkaDependencies: _*)
+
+lazy val `xcf-batch-analytics` = project
+  .settings(common: _*)
 
 lazy val kafkaDependencies = Seq(
   resolvers ++= Seq("confluent" at "http://packages.confluent.io/maven/"),
