@@ -27,12 +27,7 @@ module "zookeeper101" {
   myid = "101"
 }
 
-module "zookeeper102" {
-  source = "./terraform/zookeeper"
-  myid = "102"
-}
-
-module "zookeeper103" {
-  source = "./terraform/zookeeper"
-  myid = "103"
+module "kafka" {
+  source = "./terraform/kafka"
+  brokerId = "101"
 }

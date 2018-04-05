@@ -1,0 +1,40 @@
+---
+# tasks file for kafka
+- name: Installing kafka
+  yum:
+    name: confluent-kafka-2.11.noarch
+    state: present
+
+- name: ensure group "kafka" exists
+  group:
+    name: kafka
+    state: present
+
+- name: ensure user "kafka" exists
+  user:
+    name: kafka
+    group: kafka
+    shell: /bin/bash
+
+- name: ensure kafka directories exists
+  file:
+    path: "{{ item }}"
+    owner: kafka
+    group: kafka
+    state: directory
+    mode: 0755
+  with_items:
+    - [ "/var/log/zookeeper", "/var/lib/zookeeper", "/var/log/kafka" ]
+
+- name: install kafka service definition
+  copy: src=kafka.service dest=/etc/systemd/system/kafka.service owner=root group=root mode=0644
+  notify:
+    - kafka-restart
+
+- name: kafka-enable
+  service: name=kafka.service enabled=yes
+
+- name: install kafka service configuraiton
+  copy: src=kafka.conf dest=/etc/sysconfig/kafka.conf owner=root group=root mode=0644
+  notify:
+      - kafka-restart

@@ -1,0 +1,16 @@
+[Unit]
+Description=Confluent Kafka
+After=network.target network-online.target remote-fs.target
+
+[Service]
+Type=forking
+User=kafka
+Group=kafka
+EnvironmentFile=-/etc/sysconfig/kafka.conf
+ExecStart=/usr/bin/kafka-server-start -daemon /etc/kafka/server.properties
+ExecStop=/usr/bin/kafka-server-stop
+TimeoutSec=60
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

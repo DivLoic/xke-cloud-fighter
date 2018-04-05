@@ -1,0 +1,10 @@
+---
+# handlers file for kafka
+- name: kafka-reload
+  systemd: state=reloaded daemon_reload=yes name=kafka.service
+
+- name: kafka-restart
+  service: name=kafka.service state=restarted
+
+- name: kafka-stop
+  service: name=kafka.service state=stopped

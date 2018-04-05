@@ -1,0 +1,3 @@
+variable "brokerId" {
+  type = "string"
+}

@@ -1,1 +1,3 @@
-variable "myid" {}
+variable "myid" {
+  type = "string"
+}

@@ -1,6 +1,6 @@
 resource "google_compute_instance" "broker101" {
 
-  name = "broker101"
+  name = "kafka${var.brokerId}"
   tags = [ "broker" ]
   zone = "europe-west1-d"
   machine_type = "n1-standard-2"
